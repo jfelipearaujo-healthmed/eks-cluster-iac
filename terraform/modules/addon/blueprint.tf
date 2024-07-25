@@ -7,10 +7,10 @@ module "eks_blueprints_addons" {
   cluster_endpoint  = var.cluster_endpoint
   oidc_provider_arn = var.oidc_provider_arn
 
-  enable_metrics_server               = true
-  enable_aws_efs_csi_driver           = true
-  enable_aws_load_balancer_controller = true
-  enable_ingress_nginx                = true
+  enable_metrics_server     = true
+  enable_aws_efs_csi_driver = true
+  #enable_aws_load_balancer_controller = true
+  enable_ingress_nginx = true
 
   # ingress_nginx = {
   #   name = "nginx"
@@ -84,9 +84,17 @@ module "eks_blueprints_addons" {
         value = var.vpc_id
       },
       {
+        name  = "fullnameOverride",
+        value = "aws-load-balancer-controller"
+      },
+      {
         name  = "podDisruptionBudget.maxUnavailable"
         value = 1
       },
+      {
+        name  = "ingressClass"
+        value = "nlb"
+      }
     ]
   }
 }

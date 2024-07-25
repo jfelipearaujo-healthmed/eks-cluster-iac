@@ -17,15 +17,29 @@ module "cluster" {
   cluster_version = var.cluster_version
 
   namespaces = [
-    "user-service",
-    "scheduler-service",
-    "review-processor-service",
-    "appointment-service",
-    "appointment-creator-service",
+    "users",
+    "scheduler",
+    "review-processor",
+    "appointments",
+    "appointment-creator",
   ]
 
   vpc_id          = module.network.vpc_id
   private_subnets = module.network.private_subnets
+}
+
+module "secret" {
+  source = "./modules/secret"
+
+  secret_name = "jwt-signing-key"
+
+  services = [
+    "users",
+    "scheduler",
+    "review-processor",
+    "appointments",
+    "appointment-creator",
+  ]
 }
 
 module "addon" {
