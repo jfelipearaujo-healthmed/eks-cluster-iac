@@ -50,21 +50,21 @@ resource "aws_iam_role" "service_account_role" {
   })
 }
 
-module "fargate_profile" {
-  source  = "terraform-aws-modules/eks/aws//modules/fargate-profile"
-  version = "20.5.2"
+# module "fargate_profile" {
+#   source  = "terraform-aws-modules/eks/aws//modules/fargate-profile"
+#   version = "20.5.2"
 
-  name         = "apps-fargate-profile"
-  cluster_name = module.eks.cluster_name
+#   name         = "apps-fargate-profile"
+#   cluster_name = module.eks.cluster_name
 
-  subnet_ids = var.private_subnets
+#   subnet_ids = var.private_subnets
 
-  selectors = [{
-    namespace = "ns-products-ec2"
-  }]
+#   selectors = [{
+#     namespace = "ns-products-ec2"
+#   }]
 
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
-}
+#   tags = {
+#     Environment = "dev"
+#     Terraform   = "true"
+#   }
+# }

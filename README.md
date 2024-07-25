@@ -9,7 +9,6 @@ This project is responsible for provisioning a k8s cluster on AWS using EKS. The
 - [Terraform](https://www.terraform.io/downloads.html)
 - [Terraform Docs](https://github.com/terraform-docs/terraform-docs)
 - [AWS CLI](https://aws.amazon.com/cli/)
-- [Python 3](https://www.python.org/downloads/)
 
 ## Manual deployment
 
@@ -69,6 +68,7 @@ The automated deployment is triggered by a GitHub Action.
 | <a name="module_addon"></a> [addon](#module\_addon) | ./modules/addon | n/a |
 | <a name="module_cluster"></a> [cluster](#module\_cluster) | ./modules/cluster | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
+| <a name="module_secret"></a> [secret](#module\_secret) | ./modules/secret | n/a |
 ## Resources
 
 | Name | Type |

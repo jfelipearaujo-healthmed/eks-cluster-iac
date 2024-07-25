@@ -71,3 +71,9 @@ tag:
         echo "Creating tag for version v$$new_version..."; \
         git tag v$$new_version; \
     fi
+
+k8s-attach: ## Attach to the application running in Kubernetes
+	aws eks update-kubeconfig --name healthmed --region us-east-1
+
+k8s-copy-config: ## Copy the application configuration to Kubernetes
+	cat /home/jfelipearaujo/.kube/config > kubeconfig
