@@ -40,6 +40,11 @@ module "secret" {
     "appointments",
     "appointment-creator",
   ]
+
+  depends_on = [
+    module.cluster,
+    module.network
+  ]
 }
 
 module "addon" {

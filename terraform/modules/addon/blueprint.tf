@@ -7,46 +7,10 @@ module "eks_blueprints_addons" {
   cluster_endpoint  = var.cluster_endpoint
   oidc_provider_arn = var.oidc_provider_arn
 
-  enable_metrics_server     = true
-  enable_aws_efs_csi_driver = true
-  #enable_aws_load_balancer_controller = true
-  enable_ingress_nginx = true
-
-  # ingress_nginx = {
-  #   name = "nginx"
-  #   values = [
-  #     <<-EOT
-  #         controller:
-  #           replicaCount: 1
-  #           service:
-  #             annotations:
-  #               service.beta.kubernetes.io/aws-load-balancer-name: nginx
-  #               service.beta.kubernetes.io/aws-load-balancer-type: nlb
-  #               service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-  #               service.beta.kubernetes.io/aws-load-balancer-security-groups: ${aws_security_group.ingress_nginx_internal.id}
-  #           service.beta.kubernetes.io/aws-load-balancer-security-groups: ${aws_security_group.ingress_nginx_internal.id}
-  #             loadBalancerClass: service.k8s.aws/nlb
-  #             loadBalancerClass: service.k8s.aws/nlb
-  #           topologySpreadConstraints:
-  #             - maxSkew: 1
-  #               topologyKey: topology.kubernetes.io/zone
-  #               whenUnsatisfiable: ScheduleAnyway
-  #               labelSelector:
-  #                 matchLabels:
-  #                   app.kubernetes.io/instance: nginx
-  #             - maxSkew: 1
-  #               topologyKey: kubernetes.io/hostname
-  #               whenUnsatisfiable: ScheduleAnyway
-  #               labelSelector:
-  #                 matchLabels:
-  #                   app.kubernetes.io/instance: nginx
-  #           minAvailable: 1
-  #           ingressClassResource:
-  #             name: nginx
-  #             default: true
-  #       EOT
-  #   ]
-  # }
+  enable_metrics_server               = true
+  enable_aws_efs_csi_driver           = true
+  enable_aws_load_balancer_controller = true
+  enable_ingress_nginx                = true
 
   eks_addons = {
     aws-ebs-csi-driver = {
@@ -84,16 +48,12 @@ module "eks_blueprints_addons" {
         value = var.vpc_id
       },
       {
-        name  = "fullnameOverride",
-        value = "aws-load-balancer-controller"
-      },
-      {
         name  = "podDisruptionBudget.maxUnavailable"
         value = 1
       },
       {
-        name  = "ingressClass"
-        value = "nlb"
+        name  = "enableServiceMutatorWebhook"
+        value = "false"
       }
     ]
   }
@@ -131,30 +91,3 @@ module "vpc_cni_irsa" {
     }
   }
 }
-
-# resource "aws_security_group" "ingress_nginx_internal" {
-#   name        = "ingress-nginx-internal"
-#   description = "Allow local HTTP and HTTPS traffic"
-#   vpc_id      = var.vpc_id
-
-#   ingress {
-#     from_port   = 80
-#     to_port     = 80
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-
-#   ingress {
-#     from_port   = 443
-#     to_port     = 443
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }
