@@ -1,0 +1,13 @@
+@startuml architecture
+
+title "EKS Cluster e Componentes"
+
+node "AWS" {
+    component "VPC" as vpc
+    component "Subnets" as subnets
+    component "Security Groups" as security_groups
+    component "JWT Signing Key" as jwt_signing_key
+    component "EKS" as eks
+}
+
+@enduml
