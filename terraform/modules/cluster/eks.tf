@@ -16,10 +16,10 @@ module "eks" {
   eks_managed_node_groups = {
     group = {
       name           = "workers"
-      instance_types = ["t3.medium"]
+      instance_types = ["t3.large"]
 
       min_size     = 1
-      max_size     = 5
+      max_size     = 15
       desired_size = 1
     }
   }
